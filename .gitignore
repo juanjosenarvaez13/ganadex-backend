@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Ganadex - Secretos locales ###
+.env
+.env.*

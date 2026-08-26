@@ -1,0 +1,32 @@
+# Docker Compose para Ganadex.
+#
+# Uso actual: preparado para despliegue futuro / entornos reproducibles.
+# Mientras el desarrollo diario use el PostgreSQL local (puerto 5433, pgAdmin),
+# este archivo NO es necesario para levantar el backend.
+#
+# Cuando se quiera usar:
+#   docker compose up -d db
+# y apuntar DB_URL a jdbc:postgresql://localhost:5432/ganadex (o el host "db"
+# si el backend también corre en un contenedor de esta misma red).
+
+services:
+  db:
+    image: postgres:18
+    container_name: ganadex-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ganadex
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?debes definir DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ganadex_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ganadex"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  ganadex_db_data:
