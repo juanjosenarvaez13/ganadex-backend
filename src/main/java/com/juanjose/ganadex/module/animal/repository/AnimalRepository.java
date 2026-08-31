@@ -17,4 +17,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     Page<Animal> findByEstado(EstadoAnimal estado, Pageable pageable);
 
     Page<Animal> findByRazaId(Long razaId, Pageable pageable);
+
+    boolean existsByRazaId(Long razaId);
 }
