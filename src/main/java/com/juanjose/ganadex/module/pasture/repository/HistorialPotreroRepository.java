@@ -23,4 +23,6 @@ public interface HistorialPotreroRepository extends JpaRepository<HistorialPotre
 
     /** Historial completo de ocupación de un potrero. */
     List<HistorialPotrero> findByPotreroIdOrderByFechaEntradaDesc(Long potreroId);
+
+    boolean existsByPotreroId(Long potreroId);
 }
