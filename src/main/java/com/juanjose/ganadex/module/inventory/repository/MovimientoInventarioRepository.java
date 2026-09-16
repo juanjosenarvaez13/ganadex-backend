@@ -10,4 +10,6 @@ public interface MovimientoInventarioRepository extends JpaRepository<Movimiento
     Page<MovimientoInventario> findByProductoIdOrderByFechaDesc(Long productoId, Pageable pageable);
 
     Page<MovimientoInventario> findByUsuarioIdOrderByFechaDesc(Long usuarioId, Pageable pageable);
+
+    boolean existsByProductoId(Long productoId);
 }
