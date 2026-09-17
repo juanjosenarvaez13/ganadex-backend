@@ -12,7 +12,7 @@ import com.juanjose.ganadex.module.inventory.repository.MovimientoInventarioRepo
 import com.juanjose.ganadex.module.inventory.repository.ProductoRepository;
 import com.juanjose.ganadex.module.inventory.service.MovimientoInventarioService;
 import com.juanjose.ganadex.module.user.entity.Usuario;
-import com.juanjose.ganadex.module.user.repository.UsuarioRepository;
+import com.juanjose.ganadex.security.AuthenticatedUserProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -30,7 +30,7 @@ public class MovimientoInventarioServiceImpl implements MovimientoInventarioServ
 
     private final MovimientoInventarioRepository movimientoInventarioRepository;
     private final ProductoRepository productoRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final AuthenticatedUserProvider authenticatedUserProvider;
     private final MovimientoInventarioMapper movimientoInventarioMapper;
 
     @Override
@@ -38,8 +38,7 @@ public class MovimientoInventarioServiceImpl implements MovimientoInventarioServ
     public MovimientoInventarioResponse registrar(MovimientoInventarioRequest request) {
         Producto producto = productoRepository.findById(request.getProductoId())
                 .orElseThrow(() -> ResourceNotFoundException.of("Producto", request.getProductoId()));
-        Usuario usuario = usuarioRepository.findById(request.getUsuarioId())
-                .orElseThrow(() -> ResourceNotFoundException.of("Usuario", request.getUsuarioId()));
+        Usuario usuario = authenticatedUserProvider.obtenerUsuarioActual();
 
         aplicarMovimientoAlStock(producto, request.getTipoMovimiento(), request.getCantidad());
         productoRepository.save(producto);

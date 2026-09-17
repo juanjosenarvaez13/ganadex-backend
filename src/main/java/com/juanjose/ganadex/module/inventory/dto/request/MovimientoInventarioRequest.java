@@ -39,8 +39,4 @@ public class MovimientoInventarioRequest {
     private String motivo;
 
     private String observaciones;
-
-    // TODO (paso 9 - JWT): se reemplaza por el usuario del SecurityContext.
-    @NotNull(message = "El usuario es obligatorio.")
-    private Long usuarioId;
 }

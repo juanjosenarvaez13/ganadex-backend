@@ -14,7 +14,7 @@ import com.juanjose.ganadex.module.animal.service.AnimalService;
 import com.juanjose.ganadex.module.breed.entity.Raza;
 import com.juanjose.ganadex.module.breed.repository.RazaRepository;
 import com.juanjose.ganadex.module.user.entity.Usuario;
-import com.juanjose.ganadex.module.user.repository.UsuarioRepository;
+import com.juanjose.ganadex.security.AuthenticatedUserProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -43,7 +43,7 @@ public class AnimalServiceImpl implements AnimalService {
 
     private final AnimalRepository animalRepository;
     private final RazaRepository razaRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final AuthenticatedUserProvider authenticatedUserProvider;
     private final AnimalMapper animalMapper;
 
     @Override
@@ -67,8 +67,7 @@ public class AnimalServiceImpl implements AnimalService {
         validarAreteDisponible(request.getNumeroArete(), null);
 
         Raza raza = buscarRazaOLanzar(request.getRazaId());
-        Usuario usuario = usuarioRepository.findById(request.getUsuarioId())
-                .orElseThrow(() -> ResourceNotFoundException.of("Usuario", request.getUsuarioId()));
+        Usuario usuario = authenticatedUserProvider.obtenerUsuarioActual();
 
         Animal animal = animalMapper.toEntity(request);
         animal.setRaza(raza);

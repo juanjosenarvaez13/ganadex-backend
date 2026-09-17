@@ -36,5 +36,5 @@ springdoc:
 
 ganadex:
   jwt:
-    secret: ${JWT_SECRET:CAMBIA_ESTA_CLAVE_EN_PRODUCCION_MINIMO_256_BITS}
+    secret: ${JWT_SECRET}
     expiration-ms: ${JWT_EXPIRATION_MS:86400000}

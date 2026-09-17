@@ -48,9 +48,4 @@ public class AnimalCreateRequest {
 
     @NotNull(message = "La raza es obligatoria.")
     private Long razaId;
-
-    // TODO (paso 9 - JWT): una vez exista autenticación, este campo se
-    // elimina del DTO y el usuario se toma del SecurityContext, no del body.
-    @NotNull(message = "El usuario es obligatorio.")
-    private Long usuarioId;
 }
