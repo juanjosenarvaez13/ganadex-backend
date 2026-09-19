@@ -14,4 +14,7 @@ public interface PotreroRepository extends JpaRepository<Potrero, Long> {
     boolean existsByNombre(String nombre);
 
     List<Potrero> findByEstado(EstadoPotrero estado);
+
+    /** Conteo usado por el dashboard — se resuelve con COUNT en la BD. */
+    long countByEstado(EstadoPotrero estado);
 }
